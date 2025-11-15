@@ -11,6 +11,7 @@ let noisePoints = [];
 let scaleFactor;
 let t = 0;   
 
+//Segment Class (Tree Branch).
 class Segment{
   constructor(x,y,length,angle,level){
     this.x = x;
@@ -19,6 +20,7 @@ class Segment{
     this.angle = angle;
     this.level = level;
 
+    //Different thickness for different branch level.
     if(this.level === 1){
       this.thickness = 15;
     } else if(this.level === 2){
@@ -29,19 +31,20 @@ class Segment{
       this.thickness = 4
     }
 
+    // Small waving animation values.
     this.swayAmp = random(1,3);
     this.swaySpeed = random(0.2, 0.2);
-
+    // Calculate the end point of the branch based on angle.
     this.x2 = this.x + cos(this.angle) * this.length;
     this.y2 = this.y - sin(this.angle) * this.length;
   }
 
   
   draw(){
+    // Set branches' color.
     stroke(0);
-    // ↑ branches' color
     strokeWeight(this.thickness);
-    
+    // Small animation using sin() to simulate "wind".
     let sway = sin(frameCount* this.swaySpeed + this.y * 0.05)* this.swayAmp;
 
     let newX = this.x + cos(this.angle + radians(sway * 0.5)) * this.length;
@@ -51,7 +54,7 @@ class Segment{
     //let branches silghtly wave.
   }
 }
-
+// Apple class(generate, sway, drop)
 class Apple {
   constructor(x,y,color){
     this.stratX = x;
@@ -62,13 +65,13 @@ class Apple {
     this.color = color;
     this.state = "waiting";
     this.timer = 0; 
-
+    // Slight left and right swing while apple are hanging.
     this.swayRate = random(1.0, 3.0);    
     this.swaySpeed = random(0.5, 0.3); 
     this.swayPhase = random(0, TWO_PI); 
   }     
   reset(){
-    //back to the tree.
+    // Reset apple to initial position.
     this.x = this.stratX;
     this.y = this.stratY;
     this.dropSpeed = 0;
@@ -78,6 +81,7 @@ class Apple {
   }
   update(){
     if (this.state ==="waiting"){
+      // Waiting for 2 seconds before falling.
       this.timer++;
       if(this.timer > 120){
         this.state = "falling";
