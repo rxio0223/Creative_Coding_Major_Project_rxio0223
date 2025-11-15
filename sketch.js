@@ -205,6 +205,20 @@ function draw(){
   }
   pop();
 
+  //gold dust
+  push();
+  noStroke();
+
+  for(let i=0;i<500;i++){
+    let x = random(0,DESIGN_W);
+    let y = random(0,DESIGN_H*0.5);
+    let n = noise(x*0.01,y*0.01);
+    if (n>0.55){
+      fill(255,230,140,80);
+      rect(x,y,2,2);
+    }
+  }
+  pop();
 
   //wind
   push();
