@@ -88,14 +88,16 @@ class Apple {
         this.timer = 0;
       }
     } else if (this.state ==="falling"){
+      // Apply gravity.
       this.dropSpeed += gravity * gravityDirection;
       this.y += this.dropSpeed;
-    
+    // Hit ground.
     if(gravityDirection === 1 && this.y >= ground){
       this.y = ground;
       this.state = "landed";
       this.dropSpeed = 0;
       this.timer = 0;
+    // Hit top(when reversed gravity).
     } else if (gravityDirection === -1 && this.y <=topY){
       this.y = topY;
       this.state = "landed";
@@ -104,6 +106,7 @@ class Apple {
     }
   }
       else if (this.state === "landed"){
+        // Rest for 2 seconds then return to tree.
         this.timer++;
         if(this.timer > 120){
           this.reset();
@@ -117,6 +120,7 @@ class Apple {
     
     let drawX = this.x;
     let drawY = this.y;
+    // Slight sway when hanging.
     if (this.state === "waiting") {
       const t = frameCount * this.swaySpeed + this.swayPhase;
       drawX += sin(t) * this.swayRate;}
@@ -125,7 +129,7 @@ class Apple {
       ellipse(drawX, drawY, 40, 40);
   }
 }
-
+//Recursive Tree Generator.
 function generateTree(x, y, length, angle, level){
   if (length < 40) return;
   
@@ -136,7 +140,8 @@ function generateTree(x, y, length, angle, level){
 
   let endX = branch.x2;
   let endY = branch.y2;
-  
+
+  //Random chance to grow an apple on highter level branch.
   if (level >= 3 && random()<0.2){
     let t = random(0.3,0.9);
     let appleX = lerp(branch.x, branch.x2, t);
@@ -162,8 +167,9 @@ function generateTree(x, y, length, angle, level){
 function setup() {
   createCanvas(windowWidth, windowHeight); 
   frameRate(60);  
+  // Keep 600* 800 proportion across screens.  
   scaleFactor = min(windowWidth/ DESIGN_W, windowHeight/ DESIGN_H);
-
+  // Generate background noise lines.
   for (let i = 0; i < 1000; i++){
     noisePoints.push({
       x: random(-width- 1000, width+ 1000),
@@ -171,10 +177,11 @@ function setup() {
       c:[random(100,180), random(150,200), random(200,255), random(80,150)]
     });
   }
+  // Generate a full recursive tree.
   generateTree(300, 650, 200, PI / 2, 1);
 }
 
-
+// Main draw loop
 function draw(){
   //base background
   background(60,80,120);
@@ -265,7 +272,7 @@ function draw(){
   t += 0.005;
   pop();
 
-  //basic decoration
+  // Ground.
   fill(40,140,90);
   rect(0,650,600,100);
   stroke(0);
@@ -342,16 +349,16 @@ function draw(){
     fill(255,255,255,random(10,40));
     rect(random(125,475),random(625,700), 1, 1);
   }
-
+  // Draw all branches.
   for (let branch of branches ){
     branch.draw(); 
   }
-
+   // Draw and update all apples.
   for (let a of apples){
     a.update();
     a.draw();
   }
-  
+  // Display gravity control text.
   noStroke();
   fill(255);
   textSize(25);
@@ -363,12 +370,12 @@ function draw(){
     text("- Let Newton be confused ! ! ! -",240,30);
     pop();
 }
-
+// Make the canvas size match the screen size.
 function fitWidow(){
   resizeCanvas(windowWidth,windowHeight);
   scaleFactor = min(windowWidth / DESIGN_W, windowHeight/ DESIGN_H);
 }
-
+// Add keypress to control the direction of gravity.
 function keyPressed(){
   if (key === ' '){
     gravityDirection *= -1;
