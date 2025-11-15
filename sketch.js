@@ -179,6 +179,32 @@ function draw(){
   scale(scaleFactor);
   translate((width / scaleFactor - DESIGN_W)/ 2, (height/ scaleFactor - DESIGN_H)/2);
 
+  //cloud
+  push();
+  noStroke();
+
+  let cloudDensity = 1.4;
+  let cloudAlpha = 130;
+  let ns = 0.006;
+  let step = 2;
+  for (let y=0;y<DESIGN_H*0.6;y +=step){
+    for (let x=0;x<DESIGN_W;x +=step){
+      let n =noise(x*ns,y*ns,t*0.04);
+      if (n>0.25){
+        let fadeLeft = map(x,0,DESIGN_W*0.02,0,1,true);
+        let fadeRight = map(x,DESIGN_W*0.98,DESIGN_W,1,0,true);
+        let fadeTop = map(y,0,DESIGN_H*0.04,0,1,true);
+        let fadeBottom = map(y,DESIGN_H*0.55,DESIGN_H*0.6,1,0,true);
+        let fade = fadeLeft*fadeRight*fadeTop*fadeBottom;
+        let alpha = cloudAlpha*pow((n-0.25),1.25)*cloudDensity*fade;
+        fill(255,255,255,alpha);
+        rect(x,y,step,step)
+
+      }
+    }
+  }
+  pop();
+
 
   //wind
   push();
