@@ -9,6 +9,7 @@ let ground = 750;
 let topY = 20;
 let noisePoints = [];
 let scaleFactor;
+let t = 0;   
 
 class Segment{
   constructor(x,y,length,angle,level){
@@ -147,7 +148,7 @@ function generateTree(x, y, length, angle, level){
     let c = random(colorChoice);
     apples.push(new Apple(appleX, appleY, c));
   }
-  /*The transition from "if(level >= 3)" to "apples.push(new Apple(appleX, appleY, c));"
+   /*The transition from "if(level >= 3)" to "apples.push(new Apple(appleX, appleY, c));"
   is partly obtained by asking ChatGPT, The specific question-and-answer process will be placed in the appendix.*/
 
   generateTree(endX, endY, length* 0.75, angle + angleOffset, level + 1);
@@ -178,12 +179,49 @@ function draw(){
   scale(scaleFactor);
   translate((width / scaleFactor - DESIGN_W)/ 2, (height/ scaleFactor - DESIGN_H)/2);
 
-  noStroke();
-  for (let p of noisePoints){
-    fill(p.c[0],p.c[1],p.c[2],p.c[3]);
-    rect(p.x, p.y, 100, 2);
-  }
 
+  //wind
+  push();
+  noFill();
+  strokeWeight(1);
+
+  let groupCount = 5;
+  let  layersPerGroup = 150;
+  
+  for (let g=0;g<groupCount;g++){
+    let yCenter = map(g,0,groupCount-1,DESIGN_H*0.05,DESIGN_H*0.48);
+    let baseShift = g*3000;
+
+    for(let i=0;i<layersPerGroup;i++){
+      let offset = i*0.004;
+      stroke(255,4);
+      function nx(seed){
+        return lerp(-DESIGN_W*0.4,DESIGN_W*1.4,
+          noise(t*0.6+seed+baseShift)*0.7+noise(t*0.03+seed*2+baseShift*0.5)*0.3);
+      } 
+      function ny(seed){
+        return yCenter+140*(noise(t*0.4+seed)*0.6+noise(t*0.02+seed*1.7+1000)*0.4);
+      }
+      let x1 = nx(15+offset);
+      let x2 = nx(25+offset);
+      let x3 = nx(35+offset);
+      let x4 = nx(45+offset);
+      let y1 = nx(55+offset);
+      let y2 = nx(65+offset);
+      let y3 = nx(75+offset);
+      let y4 = nx(85+offset);
+      
+      let twist = sin(i*0.06)*25;
+      x2 +=twist;
+      x3 -=twist;
+
+      bezier(x1, y1, x2, y2, x3, y3, x4, y4);
+     }
+   }
+  t += 0.005;
+  pop();
+
+  //basic decoration
   fill(40,140,90);
   rect(0,650,600,100);
   stroke(0);
