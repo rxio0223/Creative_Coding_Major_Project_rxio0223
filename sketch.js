@@ -170,9 +170,9 @@ function drawCloud(){
   noStroke();
 
   let cloudDensity = 1.4;
-  let cloudAlpha = 130;
-  let ns = 0.006;
-  let step = 2;
+  let cloudAlpha = 140;
+  let ns = 0.008;
+  let step = 6;
   for (let y=0;y<height*0.8;y +=step){
     for (let x=0;x<width;x +=step){
       let n =noise(x*ns,y*ns,t*0.04);
@@ -192,7 +192,7 @@ function drawDust(){
   push();
   noStroke();
 
-  for(let i=0;i<500;i++){
+  for(let i=0;i<100;i++){
     let x = random(0,width);
     let y = random(0,height*0.5);
     let n = noise(x*0.01,y*0.01);
@@ -211,7 +211,7 @@ function drawWind(){
   strokeWeight(1);
 
   let groupCount = 5;
-  let  layersPerGroup = 150;
+  let  layersPerGroup = 45;
   
   for (let g=0;g<groupCount;g++){
     let yCenter = map(g,0,groupCount-1,height*0.05,height*0.48);
@@ -243,7 +243,6 @@ function drawWind(){
       bezier(x1, y1, x2, y2, x3, y3, x4, y4);
      }
    }
-  t += 0.005;
   pop();
 }
 
@@ -266,7 +265,7 @@ function setup() {
 
 // Main draw loop
 function draw(){
-  //base background
+  //Base background
   background(60,80,120);
   drawCloud();
   drawDust();
@@ -277,7 +276,7 @@ function draw(){
   scale(scaleFactor);
   translate((width / scaleFactor - DESIGN_W)/ 2, (height/ scaleFactor - DESIGN_H)/2);
 
-  // Ground.
+  //Ground
   fill(40,140,90);
   rect(0,650,600,100);
   stroke(0);
@@ -286,14 +285,14 @@ function draw(){
   rect(0,650,600,100);
   noStroke();
 
-  //yellow base
+  //Yellow base
   fill(240,210,60);
   stroke(0);
   strokeWeight(10);
   rect(125,625,350,75);
   noStroke();
 
-  //colorfull rects
+  //Colorfull rects
   const colors = [
     color(240,210,60),
     color(240,70,70),
@@ -373,7 +372,7 @@ function draw(){
     text("Press SPACE to change gravity (now ↑ ↑ ↑)",20,785);
   }
     text("- Let Newton be confused ! ! ! -",240,30);
-    pop();
+  pop();
 }
 // Make the canvas size match the screen size.
 function fitWidow(){
