@@ -163,6 +163,7 @@ function generateTree(x, y, length, angle, level){
   generateTree(endX, endY, length* 0.75, angle + angleOffset, level + 1);
   generateTree(endX, endY, length* 0.75, angle - angleOffset, level + 1);
 }
+
 //Cloud
 function drawCloud(){
   push();
@@ -172,8 +173,8 @@ function drawCloud(){
   let cloudAlpha = 130;
   let ns = 0.006;
   let step = 2;
-  for (let y=0;y<DESIGN_H*0.8;y +=step){
-    for (let x=0;x<DESIGN_W;x +=step){
+  for (let y=0;y<height*0.8;y +=step){
+    for (let x=0;x<width;x +=step){
       let n =noise(x*ns,y*ns,t*0.04);
       if (n>0.25){
         let alpha = cloudAlpha*pow((n-0.25),1.25)*cloudDensity;
@@ -183,6 +184,66 @@ function drawCloud(){
       }
     }
   }
+  pop();
+}
+
+//Gold dust
+function drawDust(){
+  push();
+  noStroke();
+
+  for(let i=0;i<500;i++){
+    let x = random(0,width);
+    let y = random(0,height*0.5);
+    let n = noise(x*0.01,y*0.01);
+    if (n>0.55){
+      fill(255,230,140,80);
+      rect(x,y,2,2);
+    }
+  }
+  pop();
+}
+
+//Wind
+function drawWind(){
+  push();
+  noFill();
+  strokeWeight(1);
+
+  let groupCount = 5;
+  let  layersPerGroup = 150;
+  
+  for (let g=0;g<groupCount;g++){
+    let yCenter = map(g,0,groupCount-1,height*0.05,height*0.48);
+    let baseShift = g*3000;
+
+    for(let i=0;i<layersPerGroup;i++){
+      let offset = i*0.004;
+      stroke(255,4);
+      function nx(seed){
+        return lerp(-width*0.4,width*1.4,
+          noise(t*0.6+seed+baseShift)*0.7+noise(t*0.03+seed*2+baseShift*0.5)*0.3);
+      } 
+      function ny(seed){
+        return yCenter+140*(noise(t*0.4+seed)*0.6+noise(t*0.02+seed*1.7+1000)*0.4);
+      }
+      let x1 = nx(15+offset);
+      let x2 = nx(25+offset);
+      let x3 = nx(35+offset);
+      let x4 = nx(45+offset);
+      let y1 = ny(55+offset);
+      let y2 = ny(65+offset);
+      let y3 = ny(75+offset);
+      let y4 = ny(85+offset);
+      
+      let twist = sin(i*0.06)*25;
+      x2 +=twist;
+      x3 -=twist;
+
+      bezier(x1, y1, x2, y2, x3, y3, x4, y4);
+     }
+   }
+  t += 0.005;
   pop();
 }
 
@@ -208,68 +269,13 @@ function draw(){
   //base background
   background(60,80,120);
   drawCloud();
+  drawDust();
+  drawWind();
 
   
   push();
   scale(scaleFactor);
   translate((width / scaleFactor - DESIGN_W)/ 2, (height/ scaleFactor - DESIGN_H)/2);
-
-
-  //gold dust
-  push();
-  noStroke();
-
-  for(let i=0;i<500;i++){
-    let x = random(0,DESIGN_W);
-    let y = random(0,DESIGN_H*0.5);
-    let n = noise(x*0.01,y*0.01);
-    if (n>0.55){
-      fill(255,230,140,80);
-      rect(x,y,2,2);
-    }
-  }
-  pop();
-
-  //wind
-  push();
-  noFill();
-  strokeWeight(1);
-
-  let groupCount = 5;
-  let  layersPerGroup = 150;
-  
-  for (let g=0;g<groupCount;g++){
-    let yCenter = map(g,0,groupCount-1,DESIGN_H*0.05,DESIGN_H*0.48);
-    let baseShift = g*3000;
-
-    for(let i=0;i<layersPerGroup;i++){
-      let offset = i*0.004;
-      stroke(255,4);
-      function nx(seed){
-        return lerp(-DESIGN_W*0.4,DESIGN_W*1.4,
-          noise(t*0.6+seed+baseShift)*0.7+noise(t*0.03+seed*2+baseShift*0.5)*0.3);
-      } 
-      function ny(seed){
-        return yCenter+140*(noise(t*0.4+seed)*0.6+noise(t*0.02+seed*1.7+1000)*0.4);
-      }
-      let x1 = nx(15+offset);
-      let x2 = nx(25+offset);
-      let x3 = nx(35+offset);
-      let x4 = nx(45+offset);
-      let y1 = ny(55+offset);
-      let y2 = ny(65+offset);
-      let y3 = ny(75+offset);
-      let y4 = ny(85+offset);
-      
-      let twist = sin(i*0.06)*25;
-      x2 +=twist;
-      x3 -=twist;
-
-      bezier(x1, y1, x2, y2, x3, y3, x4, y4);
-     }
-   }
-  t += 0.005;
-  pop();
 
   // Ground.
   fill(40,140,90);
