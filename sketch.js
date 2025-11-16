@@ -163,6 +163,28 @@ function generateTree(x, y, length, angle, level){
   generateTree(endX, endY, length* 0.75, angle + angleOffset, level + 1);
   generateTree(endX, endY, length* 0.75, angle - angleOffset, level + 1);
 }
+//Cloud
+function drawCloud(){
+  push();
+  noStroke();
+
+  let cloudDensity = 1.4;
+  let cloudAlpha = 130;
+  let ns = 0.006;
+  let step = 2;
+  for (let y=0;y<DESIGN_H*0.8;y +=step){
+    for (let x=0;x<DESIGN_W;x +=step){
+      let n =noise(x*ns,y*ns,t*0.04);
+      if (n>0.25){
+        let alpha = cloudAlpha*pow((n-0.25),1.25)*cloudDensity;
+        fill(255,255,255,alpha);
+        rect(x,y,step,step)
+
+      }
+    }
+  }
+  pop();
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight); 
@@ -185,36 +207,13 @@ function setup() {
 function draw(){
   //base background
   background(60,80,120);
+  drawCloud();
+
   
   push();
   scale(scaleFactor);
   translate((width / scaleFactor - DESIGN_W)/ 2, (height/ scaleFactor - DESIGN_H)/2);
 
-  //cloud
-  push();
-  noStroke();
-
-  let cloudDensity = 1.4;
-  let cloudAlpha = 130;
-  let ns = 0.006;
-  let step = 2;
-  for (let y=0;y<DESIGN_H*0.6;y +=step){
-    for (let x=0;x<DESIGN_W;x +=step){
-      let n =noise(x*ns,y*ns,t*0.04);
-      if (n>0.25){
-        let fadeLeft = map(x,0,DESIGN_W*0.02,0,1,true);
-        let fadeRight = map(x,DESIGN_W*0.98,DESIGN_W,1,0,true);
-        let fadeTop = map(y,0,DESIGN_H*0.04,0,1,true);
-        let fadeBottom = map(y,DESIGN_H*0.55,DESIGN_H*0.6,1,0,true);
-        let fade = fadeLeft*fadeRight*fadeTop*fadeBottom;
-        let alpha = cloudAlpha*pow((n-0.25),1.25)*cloudDensity*fade;
-        fill(255,255,255,alpha);
-        rect(x,y,step,step)
-
-      }
-    }
-  }
-  pop();
 
   //gold dust
   push();
@@ -257,10 +256,10 @@ function draw(){
       let x2 = nx(25+offset);
       let x3 = nx(35+offset);
       let x4 = nx(45+offset);
-      let y1 = nx(55+offset);
-      let y2 = nx(65+offset);
-      let y3 = nx(75+offset);
-      let y4 = nx(85+offset);
+      let y1 = ny(55+offset);
+      let y2 = ny(65+offset);
+      let y3 = ny(75+offset);
+      let y4 = ny(85+offset);
       
       let twist = sin(i*0.06)*25;
       x2 +=twist;
