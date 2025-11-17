@@ -168,7 +168,8 @@ function generateTree(x, y, length, angle, level){
 function drawCloud(){
   push();
   noStroke();
-
+  /*This code is based on the 2D Perlin Noise Effect, with a detailed explanation provided in the README.
+  Source link: https://www.schmidtynotes.com/blog/p5/2022-01-13-2d-perlin-noise-and-half-circles/.*/
   let cloudDensity = 1.4;
   let cloudAlpha = 140;
   let ns = 0.008;
@@ -227,6 +228,8 @@ function drawWind(){
       function ny(seed){
         return yCenter+140*(noise(t*0.4+seed)*0.6+noise(t*0.02+seed*1.7+1000)*0.4);
       }
+      /*This code is based on Kogan’s Perlin Noise tutorial, with a detailed explanation provided in the README.
+      Source link: https://genekogan.com/code/p5js-perlin-noise/.*/
       let x1 = nx(15+offset);
       let x2 = nx(25+offset);
       let x3 = nx(35+offset);
