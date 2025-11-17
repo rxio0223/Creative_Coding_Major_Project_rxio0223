@@ -212,7 +212,7 @@ function drawWind(){
   strokeWeight(1);
 
   let groupCount = 5;
-  let  layersPerGroup = 45;
+  let  layersPerGroup = 35;
   
   for (let g=0;g<groupCount;g++){
     let yCenter = map(g,0,groupCount-1,height*0.05,height*0.48);
