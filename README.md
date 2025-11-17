@@ -42,6 +42,7 @@ The inspiration for the Wind comes from the clouds, moon, and starlight in Vince
 
 Amy Goodchild's twisted ribbon Bézier curve technique provides the technical foundation for this creation: by overlaying noise to move curve control points, the lines become soft, smooth, and slightly unpredictable.
 I expanded on this method, generating multiple sets of dynamic wind bands moving from the upper right to the lower left, creating a rhythmic airflow that unifies the visual momentum of the animation.
+https://www.amygoodchild.com/blog/twisted-ribbon-lines#:~:text=To%20add%20more%20variety%20to,smooth%20waves%20in%20the%20ribbons
 
 ![Wind](assets/wind.png)
 
