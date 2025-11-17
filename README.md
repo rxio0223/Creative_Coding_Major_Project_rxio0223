@@ -35,7 +35,7 @@ The system uses **Perlin noise**, combining noise values, random values, and ran
 #### 2.3.2 Gold Dust
 Shimmering gold dust inspiration comes from Gustav Klimt's "The Kiss," with the scene filled with shimmering golden patterns and inlaid decorations. The lovers are entwined within golden robes, the gold leaf surface subtly sparkling under light, giving the entire painting a luxurious glow and mysterious atmosphere, adding delicate light and shadow and a sense of motion even in the static image.
 
-![The Kiss - Gustav Klimt](https://upload.wikimedia.org/wikipedia/commons/4/40/The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg)
+![The Kiss - Gustav Klimt](assets\512px-The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg)
 
 
 
