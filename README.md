@@ -29,15 +29,13 @@ The system uses **Perlin noise**, combining noise values, random values, and ran
 
 ### 2.3 Inspiration References
 
-#### 2.3.1
 
-
-#### 2.3.2 Gold Dust
+#### 2.3.1 Gold Dust
 Shimmering gold dust inspiration comes from Gustav Klimt's "The Kiss," with the scene filled with shimmering golden patterns and inlaid decorations. The lovers are entwined within golden robes, the gold leaf surface subtly sparkling under light, giving the entire painting a luxurious glow and mysterious atmosphere, adding delicate light and shadow and a sense of motion even in the static image.
 
 ![The Kiss - Gustav Klimt](assets/512px-The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg)
 
-#### 2.3.3 Wind
+#### 2.3.2 Wind
 The inspiration for the Wind comes from the clouds, moon, and starlight in Vincent van Gogh's "Starry Night" (1889) painting, which uses curved, wavy brushstrokes to form streams of energy flow, suggesting movement and rhythm.
 
 ![Starry Night](assets/van%20Gogh,%20Starry%20Night.jpg)
@@ -90,3 +88,43 @@ Gene Kogan — Perlin Noise in p5.js
 https://genekogan.com/code/p5js-perlin-noise/
 
 I added multi-layer noise mixing and multi-curve generation on this basis, expanding from a simple example to a complete wind line animation system.
+
+---
+
+## 3. AI Appendix
+
+This appendix summarises the key conversation with ChatGPT regarding the issue where apples stopped falling after I redesigned the background. It highlights the problem, the analysis process, and how AI supported the debugging.
+
+### Q1 — Why did apples stop falling after the background change?
+
+After replacing the original stripe background with a dynamic “cloud + dust + wind” effect, the apples suddenly stopped falling. Although the apple code was unchanged, the animation no longer behaved as expected.
+
+**ChatGPT’s analysis:**  
+The apple system relies on a frame-based timer:
+this.timer++;
+if (this.timer > 120) ...
+
+Under normal conditions, 120 frames ≈ 2 seconds.  
+However, the new background introduced heavy noise sampling and multiple wind layers, causing the FPS to drop from 60 to around 1–3.
+
+With such low FPS, “120 frames” no longer equals 2 seconds but tens of seconds, making it appear as if apples never fall.
+
+ChatGPT identified the root cause as excessive background rendering causing FPS collapse, which in turn prevented the timer from progressing normally.
+
+
+### Q2 — How to fix the issue without modifying the tree or apple logic?
+
+ChatGPT suggested several optimisation steps:
+
+- Reduce cloud density (step 2 → 5)  
+- Reduce wind layers (150 → 40)  
+- Reduce the number of dust particles  
+
+These adjustments significantly lowered background computation while preserving the overall aesthetic.
+
+
+### Result
+
+With ChatGPT’s assistance, the FPS returned to a normal level, the apple falling–landing–reset cycle worked again, and the original artistic intention and visual style were fully preserved.
+
+
