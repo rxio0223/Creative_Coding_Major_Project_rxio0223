@@ -382,6 +382,10 @@ function fitWidow(){
   resizeCanvas(windowWidth,windowHeight);
   scaleFactor = min(windowWidth / DESIGN_W, windowHeight/ DESIGN_H);
 }
+// Automatically trigger re-scaling when the window changes size.
+function windowResized() {
+  fitWidow();
+}
 // Add keypress to control the direction of gravity.
 function keyPressed(){
   if (key === ' '){
