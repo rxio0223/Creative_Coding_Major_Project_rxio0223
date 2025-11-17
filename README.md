@@ -106,6 +106,7 @@ this.timer++;
 if (this.timer > 120) {
     ...
 }
+```
 
 Under normal conditions, 120 frames ≈ 2 seconds.  
 However, the new background introduced heavy noise sampling and multiple wind layers, causing the FPS to drop from 60 to around 1–3.
