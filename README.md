@@ -35,8 +35,17 @@ The system uses **Perlin noise**, combining noise values, random values, and ran
 #### 2.3.2 Gold Dust
 Shimmering gold dust inspiration comes from Gustav Klimt's "The Kiss," with the scene filled with shimmering golden patterns and inlaid decorations. The lovers are entwined within golden robes, the gold leaf surface subtly sparkling under light, giving the entire painting a luxurious glow and mysterious atmosphere, adding delicate light and shadow and a sense of motion even in the static image.
 
-![The Kiss - Gustav Klimt](assets\512px-The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg)
+![The Kiss - Gustav Klimt](assets/512px-The_Kiss_-_Gustav_Klimt_-_Google_Cultural_Institute.jpg)
 
+#### 2.3.3 Wind
+The inspiration for the Wind comes from the clouds, moon, and starlight in Vincent van Gogh's "Starry Night" (1889) painting, which uses curved, wavy brushstrokes to form streams of energy flow, suggesting movement and rhythm.
+
+![Starry Night](assets/van%20Gogh,%20Starry%20Night.jpg)
+
+Amy Goodchild's twisted ribbon Bézier curve technique provides the technical foundation for this creation: by overlaying noise to move curve control points, the lines become soft, smooth, and slightly unpredictable.
+I expanded on this method, generating multiple sets of dynamic wind bands moving from the upper right to the lower left, creating a rhythmic airflow that unifies the visual momentum of the animation.
+
+![Wind](assets/wind.png)
 
 
 ### 2.4 Technical Explanation
